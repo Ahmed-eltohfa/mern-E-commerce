@@ -16,7 +16,7 @@ function Nav() {
                 </Link>
             </div>
             {/* links */}
-            <ul className='hidden sm:flex gap-4 text-gray-700 text-sm'>
+            <ul className='hidden sm:flex gap-4 text-gray-700 text-lg'>
                 <NavLink to='/' className="flex justify-center items-center gap-1 flex-col">
                     <p>HOME</p>
                     <hr className='w-2/4 h-[1.5px] bg-gray-700 border-none hidden ' />

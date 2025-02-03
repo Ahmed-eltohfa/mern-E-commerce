@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+import { products } from "../../assets/frontend_assets/assets";
 
 
 export const productSlice = createSlice({
     name: 'products',
     initialState: {
-        products: [{ id: 1, price: 12, title: "hello" }],
+        products: products,
+        currency: '$',
     },
     reducers: {
         add: (state, action) => {
