@@ -86,7 +86,7 @@ function Collection() {
             </div>
             {/* main */}
             <div className="main flex flex-col flex-1">
-                <div className="mainhead flex items-center justify-between">
+                <div className="mainhead flex md:items-center justify-between flex-col md:flex-row gap-2 items-start">
                     <div className='flex gap-1 text-center items-center text-lg  md:text-[35px] tracking-wide md:px-2'>
                         <p className='outfit-400 text-gray-400'>ALL</p>
                         <p className='outfit-600'>COLLECTIONS</p>

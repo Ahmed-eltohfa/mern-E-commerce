@@ -1,7 +1,9 @@
 import { React, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { FaStar } from "react-icons/fa6";
+import { addToCart } from '../rtk/slices/cartSlice';
+import { toast } from 'react-toastify';
 
 function Products() {
 
@@ -9,24 +11,22 @@ function Products() {
     const ID = params.productID;
     const product = useSelector(state => state.products.products.find(product => product._id === ID));
     const currency = useSelector(state => state.products.currency);
+    const dispatch = useDispatch();
     // console.log(product);
     const [img, setImage] = useState(0);
-
-
     const [sizes, setSizes] = useState([]);
 
     const handleSizeClick = (size) => {
-        setSizes((prevSizes) => {
-            if (prevSizes.includes(size)) {
-                return prevSizes.filter((prevSize) => prevSize !== size);
-            } else {
-                return [...prevSizes, size];
-            }
-        });
+        setSizes([size]);
     };
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+    const handleAddToCart = () => {
+        const toAdd = { product: product, size: sizes[0] };
+        dispatch(addToCart(toAdd));
+        toast.success("Product added successfully to cart");
+    };
 
     return (
         <div className='flex flex-col my-5'>
@@ -64,7 +64,7 @@ function Products() {
                         }
                     </div>
                     <div className="addToCart outfit-600 text-base mt-11">
-                        <button className='px-6 py-3 bg-black text-white w-52 h-16 uppercase flex justify-center items-center'>Add to Cart</button>
+                        <button className='px-6 py-3 bg-black text-white w-52 h-16 uppercase flex justify-center items-center' onClick={handleAddToCart}>Add to Cart</button>
                     </div>
                     <hr className='bg-[#ADADAD] my-5' />
                     <p className='outfit-400 text-base text-[#555555]'>100% Original product.</p>

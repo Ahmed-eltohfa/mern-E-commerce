@@ -9,11 +9,15 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Footer from "./components/Footer";
 // import { useSelector } from "react-redux";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
 
     // const products = useSelector(state => state.products);
     // console.log(products);
+    // const cart = useSelector(state => state.cart);
+    // console.log(cart);
+
 
 
     return (
@@ -32,6 +36,8 @@ function App() {
                 </Routes>
                 <Footer />
             </div>
+            <ToastContainer />
+
         </div>
     );
 }

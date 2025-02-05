@@ -7,6 +7,7 @@ export const productSlice = createSlice({
     initialState: {
         products: products,
         currency: '$',
+        shipping: 10,
     },
     reducers: {
         add: (state, action) => {

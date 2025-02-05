@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { assets } from './../assets/frontend_assets/assets';
 import { NavLink, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Nav() {
 
     const [showMenu, setShowMenu] = useState(false);
-
+    const numberOfItems = useSelector(state => state.cart.num);
 
     return (
         <div className='flex justify-between border-b-2 border-gray-300 font-medium py-5 items-center'>
@@ -48,7 +49,7 @@ function Nav() {
                 </div>
                 <Link to='/cart' className='relative'>
                     <img className='cursor-pointer w-5' src={assets.cart_icon} alt="icon" />
-                    <span className=' absolute w-4 rounded-full bg-black bottom-[-5px] right-[-5px] text-white text-center leading-4 aspect-square text-[10px]'>10</span>
+                    <span className=' absolute w-4 rounded-full bg-black bottom-[-5px] right-[-5px] text-white text-center leading-4 aspect-square text-[10px]'>{numberOfItems}</span>
                 </Link>
             </div>
             {/* phone menu */}
