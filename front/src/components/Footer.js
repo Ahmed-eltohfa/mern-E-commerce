@@ -3,7 +3,7 @@ import { assets } from '../assets/frontend_assets/assets';
 
 const Footer = () => {
     return (
-        <footer className='flex flex-col justify-between gap-20' >
+        <footer className='flex flex-col justify-between gap-20 mt-72' >
             {/* content */}
             <div className="flex justify-between gap-4 lg:gap-44 flex-col md:flex-row items-center">
                 <div className="">

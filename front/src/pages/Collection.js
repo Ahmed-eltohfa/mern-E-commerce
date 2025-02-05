@@ -47,7 +47,7 @@ function Collection() {
     }, [category, type, allProducts, sort]);
 
     return (
-        <div className='collection mt-16 flex gap-10'>
+        <div className='collection mt-16 flex gap-10 flex-col lg:flex-row'>
             {/* filters */}
             <div className="filters flex flex-col gap-5 min-w-60">
                 <h1 className='outfit-400 text-[25px] text-[#343434]'>
@@ -85,14 +85,14 @@ function Collection() {
                 </div>
             </div>
             {/* main */}
-            <div className="main flex flex-col flex-1 mb-[375px]">
+            <div className="main flex flex-col flex-1">
                 <div className="mainhead flex items-center justify-between">
-                    <div className='flex gap-1 text-center items-center text-[35px] tracking-wide px-2'>
+                    <div className='flex gap-1 text-center items-center text-lg  md:text-[35px] tracking-wide md:px-2'>
                         <p className='outfit-400 text-gray-400'>ALL</p>
                         <p className='outfit-600'>COLLECTIONS</p>
                         <hr className='w-[50px] h-[2px] bg-[#252525]' />
                     </div>
-                    <div className="sort border-2 border-[#C8C8C8] p-2 outfit-400 text-base">
+                    <div className="sort border-2 border-[#C8C8C8] pr-1 md:p-2 outfit-400 text-base ">
                         <select name="sort" id="sort" onChange={handleSortChange}>
                             <option value="relavent">Sort By: Relavent</option>
                             <option value="lth" >Sort By: Low to High</option>
@@ -100,7 +100,7 @@ function Collection() {
                         </select>
                     </div>
                 </div>
-                <div className="products grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-3 mt-4  ">
+                <div className="products grid grid-cols-2 md:grid-cols-3 gap-5 p-3 mt-4  ">
                     {products.map((product, index) => (
                         <Product key={index} {...product} />
                     ))}
