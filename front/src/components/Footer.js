@@ -1,7 +1,11 @@
 import React from 'react';
 import { assets } from '../assets/frontend_assets/assets';
+import { useNavigate } from 'react-router-dom';
 
 const Footer = () => {
+
+    const navigate = useNavigate();
+
     return (
         <footer className='flex flex-col justify-between gap-20 mt-72' >
             {/* content */}
@@ -19,10 +23,10 @@ const Footer = () => {
                 <div className="">
                     <h1 className='outfit-600 text-2xl text-[#5A5A5A] mb-10 hidden md:block'>Company</h1>
                     <ul className='outfit-400 text-lg text-[#595959] flex gap-4 md:gap-2 md:flex-col flex-row'>
-                        <li className='cursor-pointer'>Home</li>
-                        <li className='cursor-pointer'>About us</li>
-                        <li className='cursor-pointer'>Delivery</li>
-                        <li className='cursor-pointer'>Privacy policy</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/') }}>Home</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/about') }}>About us</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/delivery') }}>Delivery</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/') }}>Privacy policy</li>
                     </ul>
                 </div>
 

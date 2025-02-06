@@ -50,7 +50,7 @@ function Home() {
             <div className="sub flex flex-col gap-3 justify-center items-center">
                 <p className="outfit-500 text-[34px] text-[#373737] ">Subscribe now & get 20% off</p>
                 <p className="outfit-400 text-lg text-[#9A9A9A] ">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                <div className="mt-11 w-2/5 md:w-4/5 flex items-center  outfit-400 self-start md:self-center">
+                <div className="mt-11 w-full md:w-4/5 flex items-center  outfit-400 self-start md:self-center">
                     <input type="text" placeholder="Enter your email" className="border border-[#C7C7C7] h-full flex-1 p-1 md:p-10 py-3" />
                     <button className="bg-black text-white p-1 py-3 md:p-10 uppercase text-base ">Subscribe</button>
                 </div>
