@@ -9,7 +9,7 @@ const Footer = () => {
     return (
         <footer className='flex flex-col justify-between gap-20 mt-72' >
             {/* content */}
-            <div className="flex justify-between gap-4 lg:gap-44 flex-col md:flex-row items-center">
+            <div className="flex justify-between gap-4 lg:gap-44 flex-col md:flex-row items-start">
                 <div className="">
                     <img src={assets.logo} alt="logo" className='w-[166px] h-[47px]' />
                     <p className='outfit-400 text-[#595959] text-lg mt-9'>
