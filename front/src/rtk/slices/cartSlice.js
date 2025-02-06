@@ -37,6 +37,11 @@ export const cartSlice = createSlice({
             state.price -= product.price * quantity;
             state.num -= quantity;
         },
+        emptyCart: (state) => {
+            state.products = [];
+            state.price = 0;
+            state.num = 0;
+        }
     }
 });
 

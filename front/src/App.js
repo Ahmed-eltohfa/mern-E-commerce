@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Footer from "./components/Footer";
+import Delivery from "./pages/Delivery";
 // import { useSelector } from "react-redux";
 import { ToastContainer } from 'react-toastify';
 
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/place-order" element={<Delivery />} />
                 </Routes>
                 <Footer />
             </div>

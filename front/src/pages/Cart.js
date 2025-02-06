@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from 'react-redux'
 import { assets } from '../assets/frontend_assets/assets';
 import { removeFromCart, deleteFromCart, addToCart } from '../rtk/slices/cartSlice';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function Cart() {
     const cart = useSelector(state => state.cart);
     const dispatch = useDispatch();
     // console.log(cart);
     const shipping = useSelector(state => state.products.shipping);
-
     const currency = useSelector(state => state.products.currency);
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -89,7 +90,7 @@ function Cart() {
                     </div>
                 </div>
                 <div className="checkoutbtn outfit-500 text-base">
-                    <button className='px-5 py-3 bg-black text-white w-48 h-16 uppercase flex justify-center items-center'>checkout</button>
+                    <button className='px-5 py-3 bg-black text-white w-48 h-16 uppercase flex justify-center items-center' onClick={() => { navigate('/place-order') }}>checkout</button>
                 </div>
             </div>
         </div>

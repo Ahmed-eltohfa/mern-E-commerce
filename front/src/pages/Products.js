@@ -23,6 +23,9 @@ function Products() {
         window.scrollTo(0, 0);
     }, []);
     const handleAddToCart = () => {
+        if (sizes.length === 0) {
+            return toast.error("Please select a size");
+        }
         const toAdd = { product: product, size: sizes[0] };
         dispatch(addToCart(toAdd));
         toast.success("Product added successfully to cart");
