@@ -1,24 +1,29 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Login() {
+function Signup() {
 
     const navigate = useNavigate();
+    const [name, setName] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     return (
         <div className='flex flex-col justify-center items-center '>
             <div className='flex gap-1 items-center mt-20 text-[25px] tracking-wide pr-2'>
-                <p className='prata text-gray-800'>Login</p>
+                <p className='prata text-gray-800'>Sign</p>
+                <p className='prata'>Up</p>
                 <hr className='w-[50px] h-[2px] bg-[#252525]' />
             </div>
             <div className='flex flex-col gap-4 mt-10 md:w-1/2 w-[300px] items-center'>
-                <input type='email' placeholder='Email' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' />
-                <input type='password' placeholder='Password' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' />
+                <input type='text' placeholder='Name' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={name} onChange={(e) => setName(e.target.value)} />
+                <input type='email' placeholder='Email' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={email} onChange={(e) => setEmail(e.target.value)} />
+                <input type='password' placeholder='Password' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={password} onChange={(e) => setPassword(e.target.value)} />
                 <div className="flex justify-between -mt-2 outfit-400 text-sm text-[#3C3C3C] w-full">
-                    <p className='cursor-pointer'>Forgot Your Password?</p>
-                    <p className='cursor-pointer' onClick={() => { navigate('/sign-up') }}>Create Account</p>
+                    <p className='cursor-pointer'></p>
+                    <p className='cursor-pointer' onClick={() => { navigate('/Login') }}>Already Have Account</p>
                 </div>
-                <button className='bg-[#252525] hover:bg-black duration-100 mt-1 text-white rounded-md p-2 w-2/5'>Login</button>
+                <button className='bg-[#252525] hover:bg-black duration-100 mt-1 text-white rounded-md p-2 w-2/5'>Sign Up</button>
             </div>
             <div className="sub flex flex-col gap-3 justify-center items-center mt-24">
                 <p className="outfit-500 text-[30px] text-[#373737] ">Subscribe now & get 20% off</p>
@@ -32,4 +37,4 @@ function Login() {
     )
 }
 
-export default Login
+export default Signup

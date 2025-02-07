@@ -23,10 +23,10 @@ const Footer = () => {
                 <div className="">
                     <h1 className='outfit-600 text-2xl text-[#5A5A5A] mb-10 hidden md:block'>Company</h1>
                     <ul className='outfit-400 text-lg text-[#595959] flex gap-4 md:gap-2 md:flex-col flex-row'>
-                        <li className='cursor-pointer' onClick={() => { navigate('/') }}>Home</li>
-                        <li className='cursor-pointer' onClick={() => { navigate('/about') }}>About us</li>
-                        <li className='cursor-pointer' onClick={() => { navigate('/delivery') }}>Delivery</li>
-                        <li className='cursor-pointer' onClick={() => { navigate('/') }}>Privacy policy</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/'); window.scrollTo(0, 0); }}>Home</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/about'); window.scrollTo(0, 0); }}>About us</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/delivery'); window.scrollTo(0, 0); }}>Delivery</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/'); window.scrollTo(0, 0); }}>Privacy policy</li>
                     </ul>
                 </div>
 

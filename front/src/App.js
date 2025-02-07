@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import Delivery from "./pages/Delivery";
 // import { useSelector } from "react-redux";
 import { ToastContainer } from 'react-toastify';
+import Signup from "./pages/Signup";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/product/:productID" element={<Products />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/sign-up" element={<Signup />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/place-order" element={<Delivery />} />
