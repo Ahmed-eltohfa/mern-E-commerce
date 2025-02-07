@@ -25,7 +25,7 @@ const Footer = () => {
                     <ul className='outfit-400 text-lg text-[#595959] flex gap-4 md:gap-2 md:flex-col flex-row'>
                         <li className='cursor-pointer' onClick={() => { navigate('/'); window.scrollTo(0, 0); }}>Home</li>
                         <li className='cursor-pointer' onClick={() => { navigate('/about'); window.scrollTo(0, 0); }}>About us</li>
-                        <li className='cursor-pointer' onClick={() => { navigate('/delivery'); window.scrollTo(0, 0); }}>Delivery</li>
+                        <li className='cursor-pointer' onClick={() => { navigate('/place-order'); window.scrollTo(0, 0); }}>Delivery</li>
                         <li className='cursor-pointer' onClick={() => { navigate('/'); window.scrollTo(0, 0); }}>Privacy policy</li>
                     </ul>
                 </div>
