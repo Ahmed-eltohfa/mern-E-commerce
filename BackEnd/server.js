@@ -4,6 +4,8 @@ import 'dotenv/config';
 import connectDB from './config/mongoDB.js';
 import connectCloudinary from './config/cloudinary.js';
 import userRouter from './routes/userRouter.js';
+import productRouter from './routes/productRouter.js';
+import bodyParser from 'body-parser';
 
 // Configurations
 const app = express();
@@ -14,18 +16,25 @@ connectCloudinary();
 // Middlewares
 app.use(cors());
 app.use(express.json());
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // api routes
+
+app.use('/api/users', userRouter);
+app.use('/api/products', productRouter);
+
+
+
 app.get('/', (req, res) => {
     res.send('Hello, World!');
 });
-
-app.use('/api/users', userRouter);
-
 // Error handler
 app.use((err, req, res, next) => {
-    res.status(500).json({ success: false, message: err.message });
+    if (res.statusCode === 200) {
+        res.status(500);
+    }
+    res.json({ success: false, message: err.message });
 });
 
 
