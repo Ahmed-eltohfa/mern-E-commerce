@@ -55,7 +55,15 @@ const registerUser = asyncWrapper(
 // admin login controller
 const adminLogin = asyncWrapper(
     async (req, res) => {
-        res.send("Admin login");
+        const { email, password } = req.body;
+        if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+            const coded = process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD;
+            const token = await genToken(coded);
+            res.status(200).json({ success: true, message: "Admin login successful", data: { token } });
+        }
+        else {
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
+        }
     }
 );
 
