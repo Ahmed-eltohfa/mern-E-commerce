@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { assets } from '../admin_assets/assets'
+import axios from 'axios';
 
-function Add() {
+function Add(props) {
 
     const [sizes, setSizes] = useState([]);
     const [images, setImages] = useState();
@@ -10,10 +11,10 @@ function Add() {
     const [image3, setImage3] = useState(assets.upload_area);
     const [image4, setImage4] = useState(assets.upload_area);
 
-    const [image1file, setImage1file] = useState();
-    const [image2file, setImage2file] = useState();
-    const [image3file, setImage3file] = useState();
-    const [image4file, setImage4file] = useState();
+    const [image1file, setImage1file] = useState(null);
+    const [image2file, setImage2file] = useState(null);
+    const [image3file, setImage3file] = useState(null);
+    const [image4file, setImage4file] = useState(null);
     const [productName, setProductName] = useState('');
     const [productDescription, setProductDescription] = useState('');
     const [category, setCategory] = useState('men');
@@ -38,6 +39,53 @@ function Add() {
         file_reader.readAsDataURL(file);
         file_reader.onload = () => response(file_reader.result);
     });
+
+    const addProduct = async () => {
+        const productData = new FormData();
+        // { name, price, description, category, subCategory, sizes, bestSeller }
+        productData.append('name', productName);
+        productData.append('price', price);
+        productData.append('description', productDescription);
+        productData.append('category', category);
+        productData.append('subCategory', subCategory);
+        productData.append('sizes', JSON.stringify(sizes));
+        productData.append('bestSeller', bestSeller);
+        image1file === null ? console.log('nothere image')
+            : productData.append('image1', image1file);
+        image2file === null ? console.log('nothere image')
+            : productData.append('image2', image2file);
+        image3file === null ? console.log('nothere image')
+            : productData.append('image3', image3file);
+        image4file === null ? console.log('nothere image')
+            : productData.append('image4', image4file);
+
+        for (const pair of productData.entries()) {
+            console.log(pair[0], pair[1]);
+        }
+
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/products/add`, productData, { headers: { Authorization: `token ${props.token}` } })
+            .then(res => console.log(res))
+            .then(() => {
+                setSizes([]);
+                setImages();
+                setImage1(assets.upload_area);
+                setImage2(assets.upload_area);
+                setImage3(assets.upload_area);
+                setImage4(assets.upload_area);
+                setImage1file(null);
+                setImage2file(null);
+                setImage3file(null);
+                setImage4file(null);
+                setProductName('');
+                setProductDescription('');
+                setCategory('men');
+                setSubCategory('topWear');
+                setPrice(25);
+                setBestSeller(false);
+            })
+            .catch(e => console.log(e))
+
+    };
 
     return (
         <div>
@@ -136,7 +184,8 @@ function Add() {
                     <label htmlFor="bs">Add To BestSeller</label>
                 </div>
                 <button type="submit" className='self-start bg-black py-2 px-6 text-white' onClick={() => {
-                    console.log(images, productName, productDescription, category, subCategory, price, bestSeller);
+                    // console.log(images, productName, productDescription, category, subCategory, price, bestSeller);
+                    addProduct();
                 }}>ADD</button>
             </form>
         </div>

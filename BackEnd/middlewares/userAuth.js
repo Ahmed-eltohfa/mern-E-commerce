@@ -10,7 +10,7 @@ const userAuth = asyncWrapper(
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             // console.log(decoded);
             req.user = await userModel.findById({ _id: decoded.id });
-            console.log(req.user);
+            // console.log(req.user);
             next();
         } else {
             res.status(401);

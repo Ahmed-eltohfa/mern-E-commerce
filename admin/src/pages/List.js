@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { products } from '../frontend_assets/assets'
+// import { products } from '../frontend_assets/assets'
 import axios from 'axios'
 
-function List() {
+function List(props) {
 
     const [producto, setProducto] = useState([]);
 
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/products/list', { headers: { Authorization: 'token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTk0MjYzYTFlYWY1M2Q1MmMyNTJiYSIsImlhdCI6MTczOTQwNTI3NCwiZXhwIjoxNzQxOTk3Mjc0fQ.IrWlVY2p0LTEVTaRsnqpXZ0gDn1mkM2_Qs2upmmC3JE' } })
+    const fetchProducts = async () => {
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/products/list`, { headers: { Authorization: `token ${props.token}` } })
             .then((res) => {
                 console.log((res));
                 setProducto(res.data.data)
-                console.log(producto);
-
+                // console.log(producto);
             })
+            .catch(e => console.log(e));
+    };
+
+    useEffect(() => {
+        fetchProducts();
     }, []);
+
+    const handelDelete = async (id) => {
+        axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/products/delete/${id}`, { headers: { Authorization: `token ${props.token}` } })
+            .then(res => console.log(res))
+            .then(() => { fetchProducts() })
+            .catch(e => console.log(e));
+    }
 
     return (
         <div className='w-full'>
@@ -29,11 +40,11 @@ function List() {
                 </div>
                 {producto.map((product, index) => (
                     <div className="products grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border bg-gray-100 text-sm" key={index}>
-                        <img src={product.image[0]} alt="product pic" className='w-12' />
+                        <img src={product.image[0]} alt="product pic" className='w-12 h-14' />
                         <p className='text-start text-gray-700' >{product.name}</p>
                         <p className='text-start text-gray-700' >{product.category}</p>
                         <p className='text-start text-gray-700' >${product.price}</p>
-                        <p className='text-right md:text-center cursor-pointer text-lg text-gray-700'>X</p>
+                        <p className='text-right md:text-center cursor-pointer text-lg text-gray-700' onClick={() => { handelDelete(product._id) }}>X</p>
                     </div>
                 ))}
             </div>
