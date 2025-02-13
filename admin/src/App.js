@@ -15,7 +15,7 @@ function App() {
                 {/* main */}
                 <div className="main flex gap-2">
                     <Side />
-                    <div className="p-10">
+                    <div className="p-10 w-full">
                         <Routes>
                             <Route path="/" element={<></>} />
                             <Route path="/add" element={<Add />} />

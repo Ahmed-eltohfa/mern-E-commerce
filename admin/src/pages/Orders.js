@@ -2,7 +2,9 @@ import React from 'react'
 
 function Orders() {
     return (
-        <div>Orders</div>
+        <div className=''>
+            <p className='text-start'>Orders Page</p>
+        </div>
     )
 }
 
