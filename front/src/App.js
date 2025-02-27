@@ -19,6 +19,7 @@ function App() {
     // console.log(products);
     // const cart = useSelector(state => state.cart);
     // console.log(cart);
+    // const token = useSelector(state => state.auth.user);
 
 
 

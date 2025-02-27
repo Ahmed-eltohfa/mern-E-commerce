@@ -34,7 +34,7 @@ const placeOrder = asyncWrapper(
             paid,
         }
         const newOrder = await orderModel.create(order);
-        res.json({ success: true, data: newOrder }).status(201);
+        res.json({ success: true, data: newOrder, message: 'Order placed successfully' }).status(201);
     }
 );
 

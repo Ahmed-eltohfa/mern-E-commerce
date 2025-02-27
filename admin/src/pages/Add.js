@@ -93,7 +93,7 @@ function Add(props) {
                 <p className='text-start text-sm text-gray-400 font-bold mb-2'> Upload Images </p>
                 <div className="flex gap-4">
                     <label className="" htmlFor='image1'>
-                        <img src={image1} alt="upload-icon" className=' w-28 ' />
+                        <img src={image1} alt="upload-icon" className=' w-28 cursor-pointer ' />
                         <input type="file" name="" id="image1" hidden onChange={async (e) => {
                             const myImage = await convert_to_base64(e.target.files[0]);
                             setImage1(myImage);
@@ -101,7 +101,7 @@ function Add(props) {
                         }} accept='image/*' />
                     </label>
                     <label className="" htmlFor='image2'>
-                        <img src={image2} alt="upload-icon" className=' w-28 ' />
+                        <img src={image2} alt="upload-icon" className=' w-28 cursor-pointer ' />
                         <input type="file" name="" id="image2" hidden onChange={async (e) => {
                             const myImage = await convert_to_base64(e.target.files[0]);
                             setImage2(myImage);
@@ -109,7 +109,7 @@ function Add(props) {
                         }} accept='image/*' />
                     </label>
                     <label className="" htmlFor='image3'>
-                        <img src={image3} alt="upload-icon" className=' w-28 ' />
+                        <img src={image3} alt="upload-icon" className=' w-28 cursor-pointer ' />
                         <input type="file" name="" id="image3" hidden onChange={async (e) => {
                             const myImage = await convert_to_base64(e.target.files[0]);
                             setImage3(myImage);
@@ -117,7 +117,7 @@ function Add(props) {
                         }} accept='image/*' />
                     </label>
                     <label className="" htmlFor='image4'>
-                        <img src={image4} alt="upload-icon" className=' w-28 ' />
+                        <img src={image4} alt="upload-icon" className=' w-28 cursor-pointer ' />
                         <input type="file" name="" id="image4" hidden onChange={async (e) => {
                             const myImage = await convert_to_base64(e.target.files[0]);
                             setImage4(myImage);

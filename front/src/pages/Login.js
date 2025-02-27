@@ -1,9 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux';
+import { setUser, setToken } from '../rtk/slices/AuthSlice'
+import axios from 'axios'
+import { toast } from 'react-toastify';
 
 function Login() {
-
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const login = async () => {
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`, { email, password })
+            .then(res => {
+                console.log(res);
+                if (res.data.success) {
+                    toast.success(res.data.message);
+                    // console.log(res.data.data.token);
+                    dispatch(setToken(res.data.data.token));
+                    dispatch(setUser(res.data.data.user));
+                    navigate("/");
+                } else {
+                    toast.error(res.data.message);
+                }
+                setEmail('');
+                setPassword('');
+            })
+            .catch(e => {
+                console.log(e);
+                toast.error('Error:' + e.response.data.message);
+
+            });
+    }
 
     return (
         <div className='flex flex-col justify-center items-center '>
@@ -12,13 +41,13 @@ function Login() {
                 <hr className='w-[50px] h-[2px] bg-[#252525]' />
             </div>
             <div className='flex flex-col gap-4 mt-10 md:w-1/2 w-[300px] items-center'>
-                <input type='email' placeholder='Email' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' />
-                <input type='password' placeholder='Password' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' />
+                <input type='email' placeholder='Email' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={email} onChange={(e) => { setEmail(e.target.value) }} />
+                <input type='password' placeholder='Password' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={password} onChange={(e) => { setPassword(e.target.value) }} />
                 <div className="flex justify-between -mt-2 outfit-400 text-sm text-[#3C3C3C] w-full">
                     <p className='cursor-pointer'>Forgot Your Password?</p>
                     <p className='cursor-pointer' onClick={() => { navigate('/sign-up') }}>Create Account</p>
                 </div>
-                <button className='bg-[#252525] hover:bg-black duration-100 mt-1 text-white rounded-md p-2 w-2/5'>Login</button>
+                <button className='bg-[#252525] hover:bg-black duration-100 mt-1 text-white rounded-md p-2 w-2/5' onClick={() => { login() }}>Login</button>
             </div>
             <div className="sub flex flex-col gap-3 justify-center items-center mt-24">
                 <p className="outfit-500 text-[30px] text-[#373737] ">Subscribe now & get 20% off</p>

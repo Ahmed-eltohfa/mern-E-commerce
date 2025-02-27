@@ -1,12 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { setToken } from '../rtk/slices/AuthSlice';
 
 function Signup() {
 
     const navigate = useNavigate();
-    const [name, setName] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+
+    const register = async () => {
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/register`, { name, email, password })
+            .then(res => {
+                console.log(res);
+                if (res.data.success) {
+                    toast.success(res.data.message);
+                    dispatch(setToken(res.data.token));
+                    navigate("/");
+                } else {
+                    toast.error(res.data.message);
+                }
+                setName('');
+                setEmail('');
+                setPassword('');
+            })
+            .catch(e => {
+                console.log(e);
+                toast.error('Error:' + e.response.data.message);
+                if (e.response.data.message === 'User already exists') {
+                    navigate('/login');
+                }
+            });
+    }
 
     return (
         <div className='flex flex-col justify-center items-center '>
@@ -23,7 +52,7 @@ function Signup() {
                     <p className='cursor-pointer'></p>
                     <p className='cursor-pointer' onClick={() => { navigate('/Login') }}>Already Have Account</p>
                 </div>
-                <button className='bg-[#252525] hover:bg-black duration-100 mt-1 text-white rounded-md p-2 w-2/5'>Sign Up</button>
+                <button className='bg-[#252525] hover:bg-black duration-100 mt-1 text-white rounded-md p-2 w-2/5' onClick={() => { register() }}>Sign Up</button>
             </div>
             <div className="sub flex flex-col gap-3 justify-center items-center mt-24">
                 <p className="outfit-500 text-[30px] text-[#373737] ">Subscribe now & get 20% off</p>

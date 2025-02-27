@@ -2,13 +2,20 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { assets } from '../assets/frontend_assets/assets';
 import { useState } from 'react';
+import axios from 'axios'
+import { toast } from 'react-toastify';
 
 function Delivery() {
     const price = useSelector(state => state.cart.price);
     const shipping = useSelector(state => state.products.shipping);
     const currency = useSelector(state => state.products.currency);
+    const products = useSelector(state => state.cart.products);
+    const amount = useSelector(state => state.cart.num);
+    const token = useSelector(state => state.auth.token);
+    // console.log(products);
 
     const [paymentMethod, setPaymentMethod] = useState('COD');
+    const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [street, setStreet] = useState('');
@@ -18,6 +25,55 @@ function Delivery() {
     const [country, setCountry] = useState('');
     const [phone, setPhone] = useState('');
 
+    const setAll = () => {
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setStreet('');
+        setCity('');
+        setState('');
+        setZipCode('');
+        setCountry('');
+        setPhone('');
+    }
+
+    const addOrder = async () => {
+        // console.log(process.env.REACT_APP_BACKEND_URL);
+        if (!products) {
+            toast.error('No Cart Data');
+            return;
+        }
+        axios.post(`${process.env.REACT_APP_BACKEND_URL || "http://localhost:5000"}/api/order/place`,
+            {
+                items: products,
+                amount,
+                address: {
+                    firstName,
+                    lastName,
+                    country,
+                    state,
+                    city,
+                    street,
+                    zipCode
+                },
+                status: "Order-Placed",
+                payment: paymentMethod
+            },
+            { headers: { Authorization: `token ${token}` } })
+            .then(res => {
+                console.log(res);
+                if (res.data.success) {
+                    toast.success(res.data.message);
+                } else {
+                    toast.error(res.data.message);
+                }
+                setAll();
+            })
+            .catch(e => {
+                console.log(e);
+                toast.error('Error:' + e.response.data.message);
+            });
+    }
     return (
         <div className='flex flex-col md:flex-row justify-between items-center gap-5'>
             {/* left */}
@@ -29,7 +85,7 @@ function Delivery() {
                 </div>
                 <div className="inputs flex flex-col gap-4">
                     <div className=" flex justify-between gap-3 px-3 md:px-0">
-                        <input className=' w-3/5 outfit-400 text-lg text-black pl-3 py-1 border-2 border-gray-300' type="text" placeholder='First Name' />
+                        <input className=' w-3/5 outfit-400 text-lg text-black pl-3 py-1 border-2 border-gray-300' type="text" placeholder='First Name' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                         <input className=' w-3/5 outfit-400 text-lg text-black pl-3 py-1 border-2 border-gray-300' type="text" placeholder='Last Name' value={lastName} onChange={(e) => setLastName(e.target.value)} />
                     </div>
                     <div className=" w-full  px-3 md:px-0">
@@ -94,7 +150,7 @@ function Delivery() {
                             Cash on delivery
                         </div>
                     </div>
-                    <button className="bg-black text-white py-2 px-4 rounded-md mt-4 self-end" onClick={() => { }}>Place Order</button>
+                    <button className="bg-black text-white py-2 px-4 rounded-md mt-4 self-end" onClick={() => { addOrder() }}>Place Order</button>
                 </div>
             </div>
         </div>
