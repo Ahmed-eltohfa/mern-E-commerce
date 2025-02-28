@@ -19,7 +19,7 @@ function Login() {
                     toast.success(res.data.message);
                     // console.log(res.data.data.token);
                     dispatch(setToken(res.data.data.token));
-                    dispatch(setUser(res.data.data.user));
+                    dispatch(setUser(res.data.data.user._id));
                     navigate("/");
                 } else {
                     toast.error(res.data.message);

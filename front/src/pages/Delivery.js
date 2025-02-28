@@ -10,7 +10,7 @@ function Delivery() {
     const shipping = useSelector(state => state.products.shipping);
     const currency = useSelector(state => state.products.currency);
     const products = useSelector(state => state.cart.products);
-    const amount = useSelector(state => state.cart.num);
+    const amount = useSelector(state => state.cart.price);
     const token = useSelector(state => state.auth.token);
     // console.log(products);
 
@@ -54,7 +54,8 @@ function Delivery() {
                     state,
                     city,
                     street,
-                    zipCode
+                    zipCode,
+                    phone
                 },
                 status: "Order-Placed",
                 payment: paymentMethod

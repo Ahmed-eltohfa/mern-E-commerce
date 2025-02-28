@@ -11,8 +11,8 @@ const listOrders = asyncWrapper(
 const listUserOrder = asyncWrapper(
     async (req, res) => {
         const ID = req.params.userID;
-        const orders = await orderModel.find({ userID: ID });
-        if (orders) {
+        const orders = await orderModel.find({ userId: ID });
+        if (orders.length > 0) {
             res.json({ success: true, data: orders }).status(200);
         } else {
             res.json({ success: false, message: 'Found No Orders' }).status(404);
@@ -46,7 +46,7 @@ const updateStatus = asyncWrapper(
             const { status } = req.body;
             order.status = status;
             const updatedOrder = await order.save();
-            res.json({ success: true, data: updatedOrder }).status(200);
+            res.json({ success: true, data: updatedOrder, message: 'Order Status Updated' }).status(200);
         } else {
             res.status(404).json({ success: false, message: 'Order not found' });
         }

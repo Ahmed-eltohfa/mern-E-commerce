@@ -5,16 +5,30 @@ import { Routes, Route } from 'react-router-dom';
 import Add from './pages/Add';
 import List from './pages/List';
 import Orders from './pages/Orders';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App() {
 
     const [token, setToken] = useState(localStorage.getItem('token'));
-
+    const [products, setProducts] = useState([]);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    console.log(process.env.REACT_APP_BACKEND_URL);
+    // console.log(process.env.REACT_APP_BACKEND_URL);
+
+    const fetchProducts = async () => {
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/products/list`, { headers: { Authorization: `token ${token}` } })
+            .then((res) => {
+                console.log((res));
+                setProducts(res.data.data);
+            })
+            .catch(e => console.log(e));
+    };
+
+    useEffect(() => {
+        fetchProducts();
+        // eslint-disable-next-line
+    }, []);
 
 
     const handelSubmit = async () => {
@@ -41,8 +55,8 @@ function App() {
                             <Routes>
                                 <Route path="/" element={<></>} />
                                 <Route path="/add" element={<Add token={token} />} />
-                                <Route path="/list" element={<List token={token} />} />
-                                <Route path="/orders" element={<Orders token={token} />} />
+                                <Route path="/list" element={<List token={token} products={products} fetchProducts={fetchProducts} />} />
+                                <Route path="/orders" element={<Orders token={token} products={products} />} />
                             </Routes>
                         </div>
                     </div>

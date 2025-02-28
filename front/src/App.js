@@ -12,6 +12,7 @@ import Delivery from "./pages/Delivery";
 // import { useSelector } from "react-redux";
 import { ToastContainer } from 'react-toastify';
 import Signup from "./pages/Signup";
+import Order from "./pages/Order";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/place-order" element={<Delivery />} />
+                    <Route path="/order" element={<Order />} />
                 </Routes>
                 <Footer />
             </div>

@@ -1,29 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 // import { products } from '../frontend_assets/assets'
 import axios from 'axios'
 
 function List(props) {
 
-    const [producto, setProducto] = useState([]);
-
-    const fetchProducts = async () => {
-        axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/products/list`, { headers: { Authorization: `token ${props.token}` } })
-            .then((res) => {
-                console.log((res));
-                setProducto(res.data.data)
-                // console.log(producto);
-            })
-            .catch(e => console.log(e));
-    };
-
-    useEffect(() => {
-        fetchProducts();
-    }, []);
-
     const handelDelete = async (id) => {
         axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/products/delete/${id}`, { headers: { Authorization: `token ${props.token}` } })
             .then(res => console.log(res))
-            .then(() => { fetchProducts() })
+            .then(() => { props.fetchProducts() })
             .catch(e => console.log(e));
     }
 
@@ -38,7 +22,7 @@ function List(props) {
                     <p className=" font-bold text-gray-600 text-start ">Price</p>
                     <p className=" font-bold text-gray-600 ">Action</p>
                 </div>
-                {producto.map((product, index) => (
+                {props.products.map((product, index) => (
                     <div className="products grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border bg-gray-100 text-sm" key={index}>
                         <img src={product.image[0]} alt="product pic" className='w-12 h-14' />
                         <p className='text-start text-gray-700' >{product.name}</p>

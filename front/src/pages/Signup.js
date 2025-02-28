@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-import { setToken } from '../rtk/slices/AuthSlice';
+import { setToken, setUser } from '../rtk/slices/AuthSlice';
 
 function Signup() {
 
@@ -20,6 +20,7 @@ function Signup() {
                 if (res.data.success) {
                     toast.success(res.data.message);
                     dispatch(setToken(res.data.token));
+                    dispatch(setUser(res.data.user._id));
                     navigate("/");
                 } else {
                     toast.error(res.data.message);
