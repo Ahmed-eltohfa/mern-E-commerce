@@ -22,15 +22,14 @@ function Login() {
                     dispatch(setUser(res.data.data.user._id));
                     navigate("/");
                 } else {
-                    toast.error(res.data.message);
+                    toast.error(res.data.message || 'something went wrong');
                 }
                 setEmail('');
                 setPassword('');
             })
             .catch(e => {
                 console.log(e);
-                toast.error('Error:' + e.response.data.message);
-
+                toast.error('Error:' + e.response.data.message || 'something went wrong');
             });
     }
 

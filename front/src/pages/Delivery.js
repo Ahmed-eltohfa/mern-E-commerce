@@ -4,8 +4,11 @@ import { assets } from '../assets/frontend_assets/assets';
 import { useState } from 'react';
 import axios from 'axios'
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function Delivery() {
+    const navigate = useNavigate();
+
     const price = useSelector(state => state.cart.price);
     const shipping = useSelector(state => state.products.shipping);
     const currency = useSelector(state => state.products.currency);
@@ -69,6 +72,7 @@ function Delivery() {
                     toast.error(res.data.message);
                 }
                 setAll();
+                navigate('/order');
             })
             .catch(e => {
                 console.log(e);

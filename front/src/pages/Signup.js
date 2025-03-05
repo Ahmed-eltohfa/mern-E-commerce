@@ -31,7 +31,7 @@ function Signup() {
             })
             .catch(e => {
                 console.log(e);
-                toast.error('Error:' + e.response.data.message);
+                toast.error('Error:' + e.response.data.message || "something went wrong");
                 if (e.response.data.message === 'User already exists') {
                     navigate('/login');
                 }

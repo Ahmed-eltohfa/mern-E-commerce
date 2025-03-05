@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { assets } from '../admin_assets/assets'
 import axios from 'axios';
 
 function Add(props) {
 
     const [sizes, setSizes] = useState([]);
-    const [images, setImages] = useState();
     const [image1, setImage1] = useState(assets.upload_area);
     const [image2, setImage2] = useState(assets.upload_area);
     const [image3, setImage3] = useState(assets.upload_area);
@@ -29,10 +28,6 @@ function Add(props) {
             setSizes(prevSizes => [...prevSizes, size]);
         }
     }
-
-    useEffect(() => {
-        setImages([image1file, image2file, image3file, image4file])
-    }, [image1file, image2file, image3file, image4file]);
 
     const convert_to_base64 = file => new Promise((response) => {
         const file_reader = new FileReader();
@@ -67,7 +62,6 @@ function Add(props) {
             .then(res => console.log(res))
             .then(() => {
                 setSizes([]);
-                setImages();
                 setImage1(assets.upload_area);
                 setImage2(assets.upload_area);
                 setImage3(assets.upload_area);

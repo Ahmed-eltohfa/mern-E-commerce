@@ -9,20 +9,14 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Footer from "./components/Footer";
 import Delivery from "./pages/Delivery";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ToastContainer } from 'react-toastify';
 import Signup from "./pages/Signup";
 import Order from "./pages/Order";
 
 function App() {
-
-    // const products = useSelector(state => state.products);
-    // console.log(products);
-    // const cart = useSelector(state => state.cart);
-    // console.log(cart);
-    // const token = useSelector(state => state.auth.user);
-
-
+    const token = useSelector(state => state.auth.token);
+    // console.log(token);
 
     return (
         <div className="App ">
@@ -32,14 +26,15 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/collection" element={<Collection />} />
-                    <Route path="/cart" element={<Cart />} />
-                    <Route path="/product/:productID" element={<Products />} />
+                    <Route path="/cart" element={token ? < Cart /> : <Login />} />
+                    <Route path="/product/:productID" element={token ? < Products /> : <Login />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/sign-up" element={<Signup />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/place-order" element={<Delivery />} />
-                    <Route path="/order" element={<Order />} />
+                    <Route path="/place-order" element={token ? < Delivery /> : <Login />} />
+                    <Route path="/order" element={token ? < Order /> : <Login />} />
+                    <Route path="*" element={<h1>Not Found</h1>} />
                 </Routes>
                 <Footer />
             </div>
