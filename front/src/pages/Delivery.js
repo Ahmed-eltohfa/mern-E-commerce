@@ -1,19 +1,21 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { assets } from '../assets/frontend_assets/assets';
 import { useState } from 'react';
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { emptyCart } from '../rtk/slices/cartSlice';
 
 function Delivery() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    const price = useSelector(state => state.cart.price);
     const shipping = useSelector(state => state.products.shipping);
     const currency = useSelector(state => state.products.currency);
     const products = useSelector(state => state.cart.products);
     const amount = useSelector(state => state.cart.price);
+    const nProducts = useSelector(state => state.cart.num);
     const token = useSelector(state => state.auth.token);
     // console.log(products);
 
@@ -40,9 +42,30 @@ function Delivery() {
         setPhone('');
     }
 
+    const validateAll = () => {
+
+        const validateEmail = (email) => {
+            // Regular expression for email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        };
+
+        if (firstName === '' || lastName === '' || email === '' || street === '' || city === '' || state === '' || zipCode === '' || country === '' || phone === '') {
+            toast.error('All fields are required');
+            return false;
+        } else if (!validateEmail(email)) {
+            toast.error('Invalid Email');
+            return false;
+        }
+        return true
+    }
+
     const addOrder = async () => {
         // console.log(process.env.REACT_APP_BACKEND_URL);
-        if (!products) {
+        if (!validateAll()) {
+            return;
+        }
+        if (!(nProducts > 0)) {
             toast.error('No Cart Data');
             return;
         }
@@ -72,6 +95,7 @@ function Delivery() {
                     toast.error(res.data.message);
                 }
                 setAll();
+                dispatch(emptyCart());
                 navigate('/order');
             })
             .catch(e => {
@@ -122,7 +146,7 @@ function Delivery() {
                 <div className="flex flex-col gap-4">
                     <div className="flex justify-between">
                         <p className="outfit-400 text-lg">Subtotal:</p>
-                        <p className="outfit-400 text-lg">{currency}{price}</p>
+                        <p className="outfit-400 text-lg">{currency}{amount}</p>
                     </div>
                     <div className="flex justify-between">
                         <p className="outfit-400 text-lg">Shipping:</p>
@@ -130,7 +154,7 @@ function Delivery() {
                     </div>
                     <div className="flex justify-between">
                         <p className="outfit-600 text-lg">Total:</p>
-                        <p className="outfit-600 text-lg">{currency}{price + shipping}</p>
+                        <p className="outfit-600 text-lg">{currency}{amount + shipping}</p>
                     </div>
                 </div>
                 {/* payment */}

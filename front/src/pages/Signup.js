@@ -13,14 +13,33 @@ function Signup() {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
+    const validateEmail = (email) => {
+        // Regular expression for email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validatePassword = (password) => {
+        // Password must be at least 6 characters long
+        return password.length >= 6;
+    };
+
     const register = async () => {
+        if (!validateEmail(email)) {
+            toast.error('Invalid Email');
+            return;
+        } else if (!validatePassword(password)) {
+            toast.error('Password must be at least 6 characters long');
+            return;
+        }
         axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/register`, { name, email, password })
             .then(res => {
                 console.log(res);
                 if (res.data.success) {
+                    console.log(res.data);
                     toast.success(res.data.message);
-                    dispatch(setToken(res.data.token));
-                    dispatch(setUser(res.data.user._id));
+                    dispatch(setToken(res.data.data.token));
+                    dispatch(setUser(res.data.data.newUser._id));
                     navigate("/");
                 } else {
                     toast.error(res.data.message);
@@ -31,8 +50,8 @@ function Signup() {
             })
             .catch(e => {
                 console.log(e);
-                toast.error('Error:' + e.response.data.message || "something went wrong");
-                if (e.response.data.message === 'User already exists') {
+                toast.error(`Error: + ${e.message || "something went wrong"}`);
+                if (e.message === 'User already exists') {
                     navigate('/login');
                 }
             });

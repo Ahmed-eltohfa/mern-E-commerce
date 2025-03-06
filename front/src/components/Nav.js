@@ -1,13 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { assets } from './../assets/frontend_assets/assets';
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeToken } from '../rtk/slices/AuthSlice';
+import { toast } from 'react-toastify';
 
 function Nav() {
 
     const [showMenu, setShowMenu] = useState(false);
     const numberOfItems = useSelector(state => state.cart.num);
+    const token = useSelector(state => state.auth.token);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handelLogOut = () => {
+        dispatch(removeToken());
+    }
+
+    useEffect(() => {
+        document.body.style.overflow = showMenu ? 'hidden' : 'auto';
+    }, [showMenu]);
 
     return (
         <div className='flex justify-between border-b-2 border-gray-300 font-medium py-5 items-center'>
@@ -39,12 +51,12 @@ function Nav() {
             <div className='flex gap-6 items-center'>
                 <img className='cursor-pointer w-5' src={assets.search_icon} alt="icon" />
                 <div className="group relative">
-                    <img className='cursor-pointer w-5' src={assets.profile_icon} alt="icon" onClick={() => { navigate('/login') }} /> {/* change later */}
+                    <img className='cursor-pointer w-5' src={assets.profile_icon} alt="icon" onClick={() => { token ? toast.warn('Logout First') : navigate('/login') }} /> {/* change later */}
                     <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
                         <div className='felx flex-col py-3 px-5 gap-2 w-36 rounded text-gray-500 bg-slate-100'>
                             <p className='cursor-pointer hover:text-black'>My Profile</p>
                             <p className='cursor-pointer hover:text-black' onClick={() => { navigate('/order') }}>Orders</p>
-                            <p className='cursor-pointer hover:text-black'>LogOut</p>
+                            <p className='cursor-pointer hover:text-black' onClick={() => { handelLogOut() }}>LogOut</p>
                         </div>
                     </div>
                 </div>

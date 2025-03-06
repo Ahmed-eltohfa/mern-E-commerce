@@ -43,21 +43,12 @@ function Orders({ token, products }) {
         <div className='orders'>
             {
                 orders ?
-                    // orders.map((order, index) => (
-                    //     <div className="products grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border bg-gray-100 text-sm" key={index}>
-                    //         <img src={order.image[0]} alt="product pic" className='w-12 h-14' />
-                    //         <p className='text-start text-gray-700' >{order.name}</p>
-                    //         <p className='text-start text-gray-700' >{order.category}</p>
-                    //         <p className='text-start text-gray-700' >${order.price}</p>
-                    //         <p className='text-right md:text-center cursor-pointer text-lg text-gray-700' onClick={() => { }}>X</p>
-                    //     </div>
-                    // ))
                     <div className='orders flex flex-col gap-4'>
                         {
                             orders.map((order, index) => (
                                 <div key={`${index}`} className='flex border px-2 py-4 text-sm justify-between gap-2'>
                                     <img src={assets.parcel_icon} alt="order icon" className='w-10 h-10' />
-                                    <div className="inf flex flex-col items-start">
+                                    <div className="inf flex flex-col items-start min-w-[250px]">
                                         {order.items.map((item, index2) => (
                                             <h3 className='' key={index2}>{item.product.name} x {item.quantity}</h3>
                                         ))}

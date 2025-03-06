@@ -40,7 +40,8 @@ const addProduct = asyncWrapper(
 const getAllProducts = asyncWrapper(
     async (req, res) => {
         const products = await productModel.find({});
-        res.json({ success: true, data: products }).status(200);
+        const sortedProducts = products.sort((a, b) => new Date(b.date) - new Date(a.date));
+        res.json({ success: true, data: sortedProducts }).status(200);
     }
 );
 

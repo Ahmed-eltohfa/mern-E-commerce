@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Product from '../components/Product';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts } from '../rtk/slices/productSlice';
 
 function Collection() {
     const [category, setCategory] = useState([]);
@@ -14,6 +15,10 @@ function Collection() {
 
     const allProducts = useSelector(state => state.products.products);
     // console.log(allProducts);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
 
     const handleCategoryChange = (event) => {
         const { id, checked } = event.target;
@@ -100,7 +105,7 @@ function Collection() {
                         </select>
                     </div>
                 </div>
-                <div className="products grid grid-cols-2 md:grid-cols-3 gap-5 p-3 mt-4  ">
+                <div className="products grid grid-cols-2 md:grid-cols-3 gap-5 p-3 mt-4 ">
                     {products.map((product, index) => (
                         <Product key={index} {...product} />
                     ))}

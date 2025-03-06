@@ -66,7 +66,7 @@ function Cart() {
                         <hr className='w-full border-gray-300' />
                     </>
                 ))
-                    : <h1 className='text-center'>No items in cart</h1>
+                    : <h1 className='text-center text-xl font-bold outfit-600'>No items in cart</h1>
                 }
             </div>
             {/* check out */}
@@ -90,7 +90,7 @@ function Cart() {
                     </div>
                 </div>
                 <div className="checkoutbtn outfit-500 text-base">
-                    <button className='px-5 py-3 bg-black text-white w-48 h-16 uppercase flex justify-center items-center' onClick={() => { navigate('/place-order') }}>checkout</button>
+                    <button className={`px-5 py-3 ${cart.num > 0 ? null : 'hover:cursor-not-allowed'}  bg-black text-white w-48 h-16 uppercase flex justify-center items-center `} onClick={() => { cart.num > 0 ? navigate('/place-order') : toast.warn('Cart is empty') }}>checkout</button>
                 </div>
             </div>
         </div>

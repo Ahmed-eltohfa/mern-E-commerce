@@ -4,18 +4,20 @@ import { useSelector, useDispatch } from 'react-redux'
 import { FaStar } from "react-icons/fa6";
 import { addToCart } from '../rtk/slices/cartSlice';
 import { toast } from 'react-toastify';
+import Product from '../components/Product';
 
 function Products() {
 
     const params = useParams();
     const ID = params.productID;
+    const products = useSelector(state => state.products.products);
     const product = useSelector(state => state.products.products.find(product => product._id === ID));
     const currency = useSelector(state => state.products.currency);
     const dispatch = useDispatch();
-    // console.log(product);
     const [img, setImage] = useState(0);
     const [sizes, setSizes] = useState([]);
 
+    const similarProducts = products.filter(prod => prod.category === product.category && prod.subCategory === product.subCategory && prod._id !== product._id).slice(0, 4);
     const handleSizeClick = (size) => {
         setSizes([size]);
     };
@@ -42,8 +44,8 @@ function Products() {
                     }
                 </div>
 
-                <div className="-order-1 md:order-2">
-                    <img src={product.image[img]} alt="product img" className='w-full' />
+                <div className="-order-1 md:order-2 overflow-hidden">
+                    <img src={product.image[img]} alt="product img" className='w-full md:w-[390px] h-[400px] overflow-hidden' />
                 </div>
 
                 <div className=" flex-1 order-3">
@@ -82,6 +84,21 @@ function Products() {
                     <p className='text-[#898989] border border-[#D0D0D0] px-6 py-4'>Reviews(122)</p>
                 </div>
                 <p className='py-12 px-8 border border-[#D0D0D0] '>{product.description}</p>
+            </div>
+            {/* similar products */}
+            <div className='mt-28'>
+                <div className='flex gap-1 items-center justify-start text-[25px] md:text-[35px] tracking-wide px-2'>
+                    <p className='outfit-400 text-gray-400'>Similar</p>
+                    <p className='outfit-600'>Products</p>
+                    <hr className='w-[50px] h-[2px] bg-[#252525]' />
+                </div>
+                <div className='sm:grid-cols-2 lg:grid-cols-4 grid grid-cols-2 md:grid-cols-3 gap-5 p-3 mt-4 '>
+                    {
+                        similarProducts.map((product, index) => (
+                            <Product key={index} {...product} />
+                        ))
+                    }
+                </div>
             </div>
         </div>
     );

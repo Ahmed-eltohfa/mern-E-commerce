@@ -10,21 +10,23 @@ function Home() {
     const products = useSelector(state => state.products.products);
     // console.log(products);
     const productsToDisplay = products.slice(0, 10);
+    // console.log(products);
 
     return (
+
         <div>
             <Hero />
             <Tilte title1="LATEST" title2="COLLECTION" />
             <p className=' text-center text-[#868686] outfit-400 mt-1 text-lg'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, animi unde obcaecati ex </p>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 p-4 mt-4  '>
+            <div className='sm:grid-cols-2 lg:grid-cols-4 grid grid-cols-2 md:grid-cols-3 gap-5 p-3 mt-4'>
                 {productsToDisplay.map((product, index) => (
                     <Product key={index} {...product} />
                 ))}
             </div>
             <Tilte title1="BEST" title2="SELLERS" />
             <p className=' text-center text-[#868686] outfit-400 mt-1 text-lg'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, animi unde obcaecati ex </p>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-7 p-4 mt-4  '>
-                {products.filter(product => product.bestseller).map((product, index) => (
+            <div className='sm:grid-cols-2 lg:grid-cols-4 grid grid-cols-2 md:grid-cols-3 gap-5 p-3 mt-4 '>
+                {products.filter(product => product.bestSeller).map((product, index) => (
                     <Product key={index} {...product} />
                 ))}
             </div>

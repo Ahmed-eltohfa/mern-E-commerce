@@ -11,7 +11,25 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const validateEmail = (email) => {
+        // Regular expression for email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validatePassword = (password) => {
+        // Password must be at least 6 characters long
+        return password.length >= 6;
+    };
+
     const login = async () => {
+        if (!validateEmail(email)) {
+            toast.error('Invalid Email');
+            return;
+        } else if (!validatePassword(password)) {
+            toast.error('Password must be at least 6 characters long');
+            return;
+        }
         axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/login`, { email, password })
             .then(res => {
                 console.log(res);
@@ -29,7 +47,7 @@ function Login() {
             })
             .catch(e => {
                 console.log(e);
-                toast.error('Error:' + e.response.data.message || 'something went wrong');
+                toast.error(`Error:' + ${e.response.data.message || 'something went wrong'}`);
             });
     }
 

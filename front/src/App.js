@@ -9,14 +9,21 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Footer from "./components/Footer";
 import Delivery from "./pages/Delivery";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from 'react-toastify';
 import Signup from "./pages/Signup";
 import Order from "./pages/Order";
+import { fetchProducts } from "./rtk/slices/productSlice";
+import { useEffect } from "react";
 
 function App() {
     const token = useSelector(state => state.auth.token);
     // console.log(token);
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
 
     return (
         <div className="App ">
