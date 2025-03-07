@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import { products } from '../frontend_assets/assets'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 function List(props) {
 
     const handelDelete = async (id) => {
         axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/products/delete/${id}`, { headers: { Authorization: `token ${props.token}` } })
-            .then(res => console.log(res))
-            .then(() => { props.fetchProducts() })
-            .catch(e => console.log(e));
+            .then(res => {
+                console.log(res);
+                if (res.data.success) {
+                    console.log('Product Deleted');
+                    props.fetchProducts();
+                    toast.success('Product Deleted successfully');
+                } else {
+                    toast.error(`Error: ${res.data.message}`);
+                }
+            })
+            .catch(e => {
+                console.log(e);
+                toast.error(`Error: ${e.response.data.message}`);
+            });
     }
+
+    useEffect(() => {
+        props.fetchProducts();
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <div className='w-full'>

@@ -7,6 +7,7 @@ import List from './pages/List';
 import Orders from './pages/Orders';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
 
@@ -36,10 +37,18 @@ function App() {
         axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/admin`, { email, password })
             .then((res) => {
                 console.log(res.data.data);
-                setToken(res.data.data.token);
-                localStorage.setItem('token', res.data.data.token);
+                if (res.data.success) {
+                    setToken(res.data.data.token);
+                    localStorage.setItem('token', res.data.data.token);
+                    toast.success('Admin Login Successfull');
+                } else {
+                    toast.error(res.data.message);
+                }
             })
-            .catch(e => console.log(e))
+            .catch(e => {
+                console.log(e);
+                toast.error('Admin Login Failed');
+            })
     };
 
     return (
@@ -74,6 +83,7 @@ function App() {
                     </div>
                 </div>
             }
+            <ToastContainer />
         </div>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { assets } from '../admin_assets/assets'
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Add(props) {
 
@@ -59,7 +60,14 @@ function Add(props) {
         }
 
         axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/products/add`, productData, { headers: { Authorization: `token ${props.token}` } })
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res.data);
+                if (res.data.success) {
+                    toast.success('Product Added Successfully');
+                } else {
+                    toast.error(res.data.message);
+                }
+            })
             .then(() => {
                 setSizes([]);
                 setImage1(assets.upload_area);
@@ -77,8 +85,10 @@ function Add(props) {
                 setPrice(25);
                 setBestSeller(false);
             })
-            .catch(e => console.log(e))
-
+            .catch(e => {
+                console.log(e);
+                toast.error(`Error: ${e.response.data.message}`);
+            })
     };
 
     return (

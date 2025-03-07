@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { assets } from '../admin_assets/assets';
+import { toast } from 'react-toastify';
 
 function Orders({ token, products }) {
 
@@ -27,10 +28,13 @@ function Orders({ token, products }) {
                 if (res.data.success) {
                     console.log(res.data.data);
                     fetchOrders();
+                } else {
+                    toast.error(res.data.message);
                 }
             })
             .catch(e => {
                 console.log(e);
+                toast.error(`Error: ${e.response.data.message}`);
             })
     }
 
