@@ -15,6 +15,8 @@ import Signup from "./pages/Signup";
 import Order from "./pages/Order";
 import { fetchProducts } from "./rtk/slices/productSlice";
 import { useEffect } from "react";
+import axios from "axios";
+import { removeToken } from "./rtk/slices/AuthSlice";
 
 function App() {
     const token = useSelector(state => state.auth.token);
@@ -24,6 +26,26 @@ function App() {
     useEffect(() => {
         dispatch(fetchProducts());
     }, [dispatch]);
+    // jwt expired
+
+    const checkToken = async () => {
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/isLogged`, {}, { headers: { Authorization: `Bearer ${token}` } })
+            .then(res => {
+                console.log(res);
+                if (!res.data.success && res.data.message === 'jwt expired') {
+                    dispatch(removeToken());
+                }
+            }).catch(e => {
+                if (!e.response.data.success && e.response.data.message === 'jwt expired') {
+                    dispatch(removeToken());
+                }
+            })
+    }
+
+    useEffect(() => {
+        checkToken();
+        // eslint-disable-next-line
+    }, [])
 
     return (
         <div className="App ">

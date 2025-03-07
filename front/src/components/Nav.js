@@ -14,7 +14,12 @@ function Nav() {
     const dispatch = useDispatch();
 
     const handelLogOut = () => {
+        if (!token) {
+            toast.warn('You are not logged in');
+            return;
+        }
         dispatch(removeToken());
+        toast.success('Logged Out Successfully');
     }
 
     useEffect(() => {

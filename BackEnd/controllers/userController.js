@@ -67,5 +67,9 @@ const adminLogin = asyncWrapper(
     }
 );
 
+// check login
+const isLoggedIn = (req, res) => {
+    res.status(200).json({ success: true, message: "You are Logged" });
+}
 
-export { loginUser, registerUser, adminLogin };
+export { loginUser, registerUser, adminLogin, isLoggedIn };
