@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-// import { products } from '../frontend_assets/assets'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
@@ -40,9 +39,9 @@ function List(props) {
                     <p className=" font-bold text-gray-600 ">Action</p>
                 </div>
                 {props.products.map((product, index) => (
-                    <div className="products grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 px-2 border bg-gray-100 text-sm" key={index}>
+                    <div className="products grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center py-1 md:px-2 border bg-gray-100 text-sm" key={index}>
                         <img src={product.image[0]} alt="product pic" className='w-12 h-14' />
-                        <p className='text-start text-gray-700' >{product.name}</p>
+                        <p className='text-start text-gray-700 pl-1 md:pl-0' >{product.name}</p>
                         <p className='text-start text-gray-700' >{product.category}</p>
                         <p className='text-start text-gray-700' >${product.price}</p>
                         <p className='text-right md:text-center cursor-pointer text-lg text-gray-700' onClick={() => { handelDelete(product._id) }}>X</p>

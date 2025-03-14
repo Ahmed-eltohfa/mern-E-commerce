@@ -15,6 +15,12 @@ export const productSlice = createSlice({
         products: [],
         currency: '$',
         shipping: 10,
+        filters: {
+            type: [],
+            category: [],
+            sort: 'relavent'
+        },
+        search: false,
     },
     reducers: {
         add: (state, action) => {
@@ -22,6 +28,12 @@ export const productSlice = createSlice({
         },
         set: (state, action) => {
             state.products = [...action.payload]
+        },
+        setFilters: (state, action) => {
+            state.filters = action.payload;
+        },
+        setSearch: (state, action) => {
+            state.search = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -37,5 +49,5 @@ export const productSlice = createSlice({
 });
 ;
 
-export const { add, set } = productSlice.actions;
+export const { add, set, setFilters, setSearch } = productSlice.actions;
 export default productSlice.reducer;

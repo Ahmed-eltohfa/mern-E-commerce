@@ -4,6 +4,8 @@ import axios from 'axios'
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { setToken, setUser } from '../rtk/slices/AuthSlice';
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 function Signup() {
 
@@ -11,6 +13,7 @@ function Signup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch();
 
     const validateEmail = (email) => {
@@ -67,8 +70,15 @@ function Signup() {
             <div className='flex flex-col gap-4 mt-10 md:w-1/2 w-[300px] items-center'>
                 <input type='text' placeholder='Name' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={name} onChange={(e) => setName(e.target.value)} />
                 <input type='email' placeholder='Email' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={email} onChange={(e) => setEmail(e.target.value)} />
-                <input type='password' placeholder='Password' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={password} onChange={(e) => setPassword(e.target.value)} />
-                <div className="flex justify-between -mt-2 outfit-400 text-sm text-[#3C3C3C] w-full">
+                <label htmlFor="" className='w-full relative'>
+                    <input type={`${showPassword ? 'text' : 'password'}`} placeholder='Password' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                    {
+                        showPassword ?
+                            <FaEyeSlash className='absolute right-4 top-1/2 -translate-y-1/2 size-5 cursor-pointer' onClick={() => { setShowPassword(!showPassword) }} />
+                            :
+                            <FaEye className='absolute right-4 top-1/2 -translate-y-1/2 size-5 cursor-pointer' onClick={() => { setShowPassword(!showPassword) }} />
+                    }
+                </label>                <div className="flex justify-between -mt-2 outfit-400 text-sm text-[#3C3C3C] w-full">
                     <p className='cursor-pointer'></p>
                     <p className='cursor-pointer' onClick={() => { navigate('/Login') }}>Already Have Account</p>
                 </div>

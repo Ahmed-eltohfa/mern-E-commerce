@@ -4,6 +4,7 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeToken } from '../rtk/slices/AuthSlice';
 import { toast } from 'react-toastify';
+import { setSearch } from '../rtk/slices/productSlice';
 
 function Nav() {
 
@@ -20,6 +21,11 @@ function Nav() {
         }
         dispatch(removeToken());
         toast.success('Logged Out Successfully');
+    }
+
+    const handelSearch = () => {
+        dispatch(setSearch(true));
+        navigate('/collection');
     }
 
     useEffect(() => {
@@ -54,10 +60,10 @@ function Nav() {
                 </NavLink>
             </ul>
             <div className='flex gap-6 items-center'>
-                <img className='cursor-pointer w-5' src={assets.search_icon} alt="icon" />
+                <img className='cursor-pointer w-5' src={assets.search_icon} alt="icon" onClick={handelSearch} />
                 <div className="group relative">
                     <img className='cursor-pointer w-5' src={assets.profile_icon} alt="icon" onClick={() => { token ? toast.warn('Logout First') : navigate('/login') }} /> {/* change later */}
-                    <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4'>
+                    <div className='group-hover:block hidden absolute dropdown-menu right-0 pt-4 z-50'>
                         <div className='felx flex-col py-3 px-5 gap-2 w-36 rounded text-gray-500 bg-slate-100'>
                             <p className='cursor-pointer hover:text-black'>My Profile</p>
                             <p className='cursor-pointer hover:text-black' onClick={() => { navigate('/order') }}>Orders</p>

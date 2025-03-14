@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { setUser, setToken } from '../rtk/slices/AuthSlice'
 import axios from 'axios'
 import { toast } from 'react-toastify';
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const validateEmail = (email) => {
         // Regular expression for email validation
@@ -21,6 +24,10 @@ function Login() {
         // Password must be at least 6 characters long
         return password.length >= 6;
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
 
     const login = async () => {
         if (!validateEmail(email)) {
@@ -59,7 +66,15 @@ function Login() {
             </div>
             <div className='flex flex-col gap-4 mt-10 md:w-1/2 w-[300px] items-center'>
                 <input type='email' placeholder='Email' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={email} onChange={(e) => { setEmail(e.target.value) }} />
-                <input type='password' placeholder='Password' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                <label htmlFor="" className='w-full relative'>
+                    <input type={`${showPassword ? 'text' : 'password'}`} placeholder='Password' className='border border-[#252525a8] rounded-md px-4 py-2 w-full' value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                    {
+                        showPassword ?
+                            <FaEyeSlash className='absolute right-4 top-1/2 -translate-y-1/2 size-5 cursor-pointer' onClick={() => { setShowPassword(!showPassword) }} />
+                            :
+                            <FaEye className='absolute right-4 top-1/2 -translate-y-1/2 size-5 cursor-pointer' onClick={() => { setShowPassword(!showPassword) }} />
+                    }
+                </label>
                 <div className="flex justify-between -mt-2 outfit-400 text-sm text-[#3C3C3C] w-full">
                     <p className='cursor-pointer'>Forgot Your Password?</p>
                     <p className='cursor-pointer' onClick={() => { navigate('/sign-up') }}>Create Account</p>

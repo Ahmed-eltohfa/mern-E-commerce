@@ -50,7 +50,7 @@ function Orders({ token, products }) {
                     <div className='orders flex flex-col gap-4'>
                         {
                             orders.map((order, index) => (
-                                <div key={`${index}`} className='flex border px-2 py-4 text-sm justify-between gap-2'>
+                                <div key={`${index}`} className='flex flex-col md:flex-row border-2 px-2 py-4 text-sm md:justify-between gap-2'>
                                     <img src={assets.parcel_icon} alt="order icon" className='w-10 h-10' />
                                     <div className="inf flex flex-col items-start min-w-[250px]">
                                         {order.items.map((item, index2) => (
@@ -69,7 +69,7 @@ function Orders({ token, products }) {
                                         <p>Date: {order.date.split('T')[0]}</p>
                                     </div>
 
-                                    <div className="price mt-2">
+                                    <div className="price mt-2 text-start">
                                         ${order.amount}
                                     </div>
 

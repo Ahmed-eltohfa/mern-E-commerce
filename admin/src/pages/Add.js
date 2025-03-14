@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../admin_assets/assets'
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -19,7 +19,7 @@ function Add(props) {
     const [productDescription, setProductDescription] = useState('');
     const [category, setCategory] = useState('men');
     const [subCategory, setSubCategory] = useState('topWear');
-    const [price, setPrice] = useState(25);
+    const [price, setPrice] = useState(0);
     const [bestSeller, setBestSeller] = useState(false);
 
     const handleClick = (size) => {
@@ -36,7 +36,28 @@ function Add(props) {
         file_reader.onload = () => response(file_reader.result);
     });
 
+    useEffect(() => {
+        console.log(price);
+    }, [price]);
+
+    const validate = () => {
+        if (productName === '' || productDescription === '' || sizes.length === 0 || price === 0) {
+            toast.error('Please fill all the fields');
+            return false;
+        } else if (price < 0) {
+            toast.error('Price cannot be negative');
+            return false;
+        } else if (image1file === null && image2file === null && image3file === null && image4file === null) {
+            toast.error('Please upload atleast one image');
+            return false;
+        }
+        return true;
+    }
+
     const addProduct = async () => {
+        if (!validate()) {
+            return;
+        }
         const productData = new FormData();
         // { name, price, description, category, subCategory, sizes, bestSeller }
         productData.append('name', productName);
@@ -93,9 +114,9 @@ function Add(props) {
 
     return (
         <div>
-            <form className='flex flex-col gap-8' onSubmit={(e) => { e.preventDefault() }}>
+            <form className='flex flex-col gap-4 md:gap-8' onSubmit={(e) => { e.preventDefault() }}>
                 <p className='text-start text-sm text-gray-400 font-bold mb-2'> Upload Images </p>
-                <div className="flex gap-4">
+                <div className="flex md:gap-4 gap-2">
                     <label className="" htmlFor='image1'>
                         <img src={image1} alt="upload-icon" className=' w-28 cursor-pointer ' />
                         <input type="file" name="" id="image1" hidden onChange={async (e) => {
@@ -131,18 +152,18 @@ function Add(props) {
                 </div>
 
                 <p className='text-start text-sm  font-bold'> Product Name </p>
-                <input type="text" placeholder='Type here' className='w-3/5 md:w-full border p-2 rounded border-black -mt-4 ' onChange={(e) => {
+                <input type="text" placeholder='Type here' className='w-full border p-1 md:p-2 rounded border-black -mt-4 ' onChange={(e) => {
                     setProductName(e.target.value)
                 }} />
                 <p className='text-start text-sm  font-bold'> Product Description </p>
-                <textarea placeholder='Write content here' className='w-3/5  md:w-full border rounded p-2 min-h-20 border-black -mt-4 ' onChange={(e) => {
+                <textarea placeholder='Write content here' className='w-full border rounded p-1 md:p-2 min-h-20 border-black -mt-4 ' onChange={(e) => {
                     setProductDescription(e.target.value)
                 }} />
 
                 <div className="choose flex flex-col md:flex-row justify-between items-center gap-5">
                     <div className=" flex flex-col gap-4 w-full md:w-auto">
-                        <p className='text-gray-600 text-start -mb-3 md:mb-auto'>Category</p>
-                        <select name="" id="" className='p-2 border border-black rounded ' onChange={(e) => {
+                        <p className='text-gray-600 text-start -mb-3 md:mb-auto font-bold text-sm md:text-base'>Category</p>
+                        <select name="" id="" className='p-1 md:p-2 border border-black rounded ' onChange={(e) => {
                             setCategory(e.target.value)
                         }}>
                             <option value="men">Men</option>
@@ -151,8 +172,8 @@ function Add(props) {
                         </select>
                     </div>
                     <div className=" flex flex-col gap-4 w-full md:w-auto">
-                        <p className='text-gray-600 text-start -mb-3 md:mb-auto'>Sub Category</p>
-                        <select name="" id="" className='p-2 border border-black rounded ' onChange={(e) => {
+                        <p className='text-gray-600 text-start -mb-3 md:mb-auto font-bold text-sm md:text-base'>Sub Category</p>
+                        <select name="" id="" className='p-1 md:p-2 border border-black rounded' onChange={(e) => {
                             setSubCategory(e.target.value)
                         }}>
                             <option value="topWear">Top Wear</option>
@@ -161,8 +182,8 @@ function Add(props) {
                         </select>
                     </div>
                     <div className=" flex flex-col gap-4 w-full md:w-auto">
-                        <p className='text-gray-600 text-start -mb-3 md:mb-auto'>Price</p>
-                        <input type="number" placeholder='25' className='p-2 border border-black rounded md:w-32' onChange={(e) => {
+                        <p className='text-gray-600 text-start -mb-3 md:mb-auto font-bold text-sm md:text-base'>Price</p>
+                        <input min={1} type="number" placeholder='25' className='p-1 md:p-2 border border-black rounded md:w-32' onChange={(e) => {
                             setPrice(e.target.value)
                         }} />
                     </div>
@@ -171,7 +192,7 @@ function Add(props) {
                 {/* sizes */}
                 <div className="flex gap-2 flex-col">
                     <p className='text-gray-600 text-start -mb-3 md:mb-auto'>Product sizes</p>
-                    <div className="sizes flex gap-2">
+                    <div className="sizes flex gap-2 md:mt-0 mt-3">
                         {/* <p >S</p> */}
                         {
                             ['S', 'M', 'L', 'XL', 'XXL'].map((size, index) => (

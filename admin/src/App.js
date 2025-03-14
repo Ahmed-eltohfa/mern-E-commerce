@@ -54,13 +54,13 @@ function App() {
     return (
         <div className="App">
             {token ?
-                <div className="px-4 sm:px-[5vw] md:px[7vw] lg:px[9vw] ">
+                <div className=" px-1 md:px-4 sm:px-[5vw] md:px[7vw] lg:px[9vw] ">
                     <Nav token={token} setToken={setToken} />
                     <hr className=' w-full ' />
                     {/* main */}
                     <div className="main flex gap-2">
                         <Side />
-                        <div className="p-10 w-full">
+                        <div className="p-1 py-10 md:px-10 w-full">
                             <Routes>
                                 <Route path="/" element={<></>} />
                                 <Route path="/add" element={<Add token={token} />} />

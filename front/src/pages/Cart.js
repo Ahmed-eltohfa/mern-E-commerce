@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { assets } from '../assets/frontend_assets/assets';
-import { removeFromCart, deleteFromCart, addToCart } from '../rtk/slices/cartSlice';
+import { removeFromCart, deleteFromCart, addToCart, emptyCart } from '../rtk/slices/cartSlice';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,10 +15,13 @@ function Cart() {
 
     return (
         <div>
-            <div className='flex gap-1 text-center items-center mt-20 text-[35px] tracking-wide px-2'>
-                <p className='outfit-400 text-gray-400'>Your</p>
-                <p className='outfit-600'>Cart</p>
-                <hr className='w-[50px] h-[2px] bg-[#252525]' />
+            <div className=" flex justify-between mt-20 items-center">
+                <div className='flex gap-1 text-center items-center text-[35px] tracking-wide px-2'>
+                    <p className='outfit-400 text-gray-400'>Your</p>
+                    <p className='outfit-600'>Cart</p>
+                    <hr className='w-[50px] h-[2px] bg-[#252525]' />
+                </div>
+                <button className={`px-3 py-2 bg-black text-white text-sm font-semibold hover:bg-white hover:text-black duration-150 border border-black h-10 uppercase flex justify-center items-center rounded-xl `} onClick={() => dispatch(emptyCart())}>Empty Cart</button>
             </div>
             <div className="products flex flex-col gap-5 mt-9">
                 {cart.num > 0 ? cart.products.map((item, index) => (

@@ -31,7 +31,7 @@ function App() {
     const checkToken = async () => {
         axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/users/isLogged`, {}, { headers: { Authorization: `Bearer ${token}` } })
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 if (!res.data.success && res.data.message === 'jwt expired') {
                     dispatch(removeToken());
                 }
@@ -43,7 +43,9 @@ function App() {
     }
 
     useEffect(() => {
-        checkToken();
+        if (token) {
+            checkToken();
+        }
         // eslint-disable-next-line
     }, [])
 
