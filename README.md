@@ -2,6 +2,9 @@
 
 A full‑stack e-commerce web application built with the MERN stack (MongoDB, Express, React, Node.js), implementing user authentication, product browsing, shopping cart, checkout flow, and admin features.
 
+> 🌐 **Live Demo**: [Click here to view the live site](https://mern-frontend-six-beta.vercel.app/)
+
+
 ---
 
 ## Features
@@ -43,40 +46,22 @@ A full‑stack e-commerce web application built with the MERN stack (MongoDB, Ex
 - MongoDB (local or Atlas)
 - Cloudinary account (for image uploads)
 
-### Setup Instructions
+### ⚙️ Setup Instructions
 
 1. **Clone the repository**
    git clone https://github.com/Ahmed-eltohfa/mern-E-commerce.git
    cd mern-E-commerce
    
-Install dependencies
+2. **Install dependencies**
+   cd backend && npm install
+   cd ../frontend && npm install
+   cd ../admin && npm install
 
-cd backend && npm install
-cd ../frontend && npm install
-cd ../admin && npm install
+3. **Set up environment variables**
+   Create a .env file in the backend directory and include:
+   MONGODB_URI=your_mongodb_connection
+   JWT_SECRET=your_jwt_secret
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
 
-Set up environment variables
-
-Create a .env file in the backend directory and include:
-env
-MONGODB_URI=your_mongodb_connection
-JWT_SECRET=your_jwt_secret
-CLOUDINARY_CLOUD_NAME=your_cloud_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_API_SECRET=your_api_secret
-
-Run the backend
-cd backend
-npm run dev
-Server will run on http://localhost:5000
-
-Run the frontend
-
-cd ../frontend
-npm start
-Client will run on http://localhost:3000
-
-Run the admin panel
-cd ../admin
-npm start
-# Admin will run on http://localhost:3001
